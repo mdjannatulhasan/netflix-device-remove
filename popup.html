@@ -13,17 +13,34 @@
                 margin: 5px;
             }
 
-            input {
-                width: 100%;
+            #keywords {
                 padding: 10px;
                 margin: 5px;
-                min-width: 200px;
+                min-width: 260px;
+            }
+
+            #toggle-refresh {
+                color-scheme: green;
+            }
+
+            .toggle-container {
+                display: flex;
+                align-items: center;
+            }
+
+            .toggle-container label {
+                margin-left: 10px;
             }
         </style>
     </head>
 
     <body>
         <h1>Netflix Device Sign Out</h1>
+        <div class="toggle-container">
+            <input type="checkbox"
+                id="toggle-refresh">
+            <label for="toggle-refresh">Enable Auto Refresh</label>
+        </div>
         <input type="text"
             id="keywords"
             placeholder="Enter keywords, separated by commas">

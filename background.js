@@ -7,7 +7,7 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 		chrome.tabs.query({ url: "https://www.netflix.com/manageaccountaccess" }, (tabs) => {
 			if (tabs.length > 0) {
 				chrome.scripting.executeScript({
-					target: { tabId: tabs.id },
+					target: { tabId: tabs[0].id },
 					files: ["content.js"],
 				});
 			}

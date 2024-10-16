@@ -1,11 +1,16 @@
-function signOutDevices(keywords) {
-	console.log(keywords);
+function signOutDevices(keywords, autoRefresh) {
+	if (!autoRefresh) {
+		return;
+	}
+	const deviceListItems = document.querySelectorAll(".device-list-item");
 
-	const deviceHeaders = document.querySelectorAll(".device-list-item-header h2");
-	deviceHeaders.forEach((header) => {
+	deviceListItems.forEach((item) => {
+		const header = item.querySelector(".device-list-item-header h2");
+		const profileName = item.querySelector(".profile-name");
+
 		keywords.forEach((keyword) => {
-			if (header.textContent.includes(keyword)) {
-				const signOutButton = header.closest(".device-list-item").querySelector("button");
+			if ((header && header.textContent.toLowerCase().includes(keyword.toLowerCase())) || (profileName && profileName.textContent.toLowerCase().includes(keyword.toLowerCase()))) {
+				const signOutButton = item.querySelector("button");
 				if (signOutButton) {
 					signOutButton.click();
 				}
@@ -14,9 +19,12 @@ function signOutDevices(keywords) {
 	});
 }
 
-chrome.storage.sync.get(["keywords"], (result) => {
+chrome.storage.sync.get(["keywords", "autoRefresh"], (result) => {
+	console.log(result);
+
 	const keywords = result.keywords ? result.keywords.split(",") : [];
-	signOutDevices(keywords);
+	const autoRefresh = result.autoRefresh ? result.autoRefresh : false;
+	signOutDevices(keywords, autoRefresh);
 });
 
 setInterval(() => {
